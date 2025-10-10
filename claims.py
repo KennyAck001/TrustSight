@@ -4,7 +4,7 @@ from typing import List, Dict
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyCOlB0QQX-FiF9HCTxTeIH2pn0MY3pzy7M")
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-pro')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 async def extract_claims(contents: List[str], search_results: List[Dict], query: str) -> List[Dict]:
     """
