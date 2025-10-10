@@ -1,225 +1,162 @@
-<div align="center">
+<h1 align="center">🌟 TrustSight</h1>
 
-<img src="https://storage.googleapis.com/maker_studio_production/generations/a6b09337-b9c1-4b72-b7e5-397ac93fcb9c/images/0_0.webp" alt="TrustSight Logo Banner" width="200"/>
-
-<h1>
-🌟 TrustSight 🌟
-</h1>
-
-<p>
-<b>An intelligent AI-powered research agent that delivers trustworthy, data-driven insights through advanced trust scoring and cross-validation.</b>
-</p>
-
-<p>
-TrustSight combines web search, content analysis, and machine learning to provide accurate research outputs in multiple formats.
-</p>
-
-<p>
-<a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3.11+-blue.svg" alt="Python"></a>
-<a href="https://fastapi.tiangolo.com/" target="_blank"><img src="https://img.shields.io/badge/FastAPI-0.104.1-green.svg" alt="FastAPI"></a>
-<a href="https://reactjs.org/" target="_blank"><img src="https://img.shields.io/badge/React-19.1.1-blue.svg" alt="React"></a>
-<a href="https://vitejs.dev/" target="_blank"><img src="https://img.shields.io/badge/Vite-7.1.7-yellow.svg" alt="Vite"></a>
-<a href="https://tailwindcss.com/" target="_blank"><img src="https://img.shields.io/badge/Tailwind_CSS-3.4.18-38B2AC.svg" alt="Tailwind CSS"></a>
-<a href="LICENSE" target="_blank"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"></a>
+<p align="center">
+An intelligent AI research agent that delivers trustworthy, data-driven insights through advanced trust scoring and cross-validation.
+<br />
+<a href="#-key-features"><strong>Explore the features »</strong></a>
+<br />
+<br />
+<a href="https://github.com/your-repo/TrustSight/issues">Report Bug</a>
+·
+<a href="https://github.com/your-repo/TrustSight/issues">Request Feature</a>
 </p>
 </div>
 
+<div align="center">
+
+</div>
+
+The Problem
+In an era of information overload and AI-generated content, finding trustworthy, unbiased information is harder than ever. Standard search tools provide links, not answers, and LLMs can hallucinate without source verification.
+
+Our Solution
+TrustSight acts as your AI research partner. It automates the tedious process of searching, fetching, cleaning, and validating information from multiple sources. By clustering claims and applying a multilayer trust score, it delivers insights you can actually rely on.
+
 <p align="center">
-<img src="https://storage.googleapis.com/maker_studio_production/generations/819d45e0-5205-4c07-b648-2612f00a6e0c/images/0_0.webp" alt="TrustSight Application Demo" />
+<img src="https://via.placeholder.com/800x450/111827/FFFFFF?text=TrustSight+Application+Screenshot" alt="TrustSight Demo" style="border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" />
 </p>
 
-🎯 Key Features
-🔍 Intelligent Research: Performs comprehensive web searches and content analysis to find the most relevant information.
+✨ Key Features
+Feature	Description
+🛡️ Advanced Trust Scoring	Evaluates source credibility, content factuality, and citation quality using a unique multilayer system.
+🔄 Automated Cross-Validation	Intelligently clusters similar claims from different sources and assigns a confidence score to each.
+📊 Dynamic Output Formats	Automatically detects the best format for your query, delivering bullet points, tables, or graphs.
+📈 Real-time Graph Generation	Generates insightful charts and graphs on the fly using matplotlib for data visualization.
+🎨 Modern & Intuitive UI	A sleek, ChatGPT-inspired dark theme interface built with React and Tailwind CSS for a great user experience.
+⚡ High-Performance Backend	Built with Python and FastAPI, featuring asynchronous processing for fast, non-blocking I/O.
 
-📊 Multiple Output Formats: Returns results as clean bullet points, structured tables, or interactive graphs.
-
-🛡️ Trust Scoring: Employs an advanced multilayer trust scoring system to evaluate source credibility and reliability.
-
-🔄 Cross-Validation Engine: Automatically clusters similar claims from different sources and assigns confidence scores.
-
-🎨 Modern UI: Features a sleek, ChatGPT-inspired dark theme interface built with React and Tailwind CSS.
-
-⚡ High-Performance Backend: Built on a high-performance Python backend with FastAPI for asynchronous processing.
-
-📈 Dynamic Graph Generation: Creates graphs in real-time using matplotlib and delivers them seamlessly to the frontend.
-
-🛠️ Tech Stack & Tools
-Our platform is built with a modern, high-performance tech stack to deliver fast and reliable results.
+Export to Sheets
+🛠️ Tech Stack
+Our stack is built on modern, high-performance technologies to deliver a fast and reliable experience.
 
 Category	Technology
-🐍 Backend	Python 3.11+, FastAPI
+🌐 Backend	Python 3.11+, FastAPI
 🧠 AI & Search	OpenAI API, Google Gemini API, Serper API
-⚛️ Frontend	React 19, Vite, Tailwind CSS
-✨ Linting	ESLint
+💻 Frontend	React 19, Vite, Tailwind CSS
+Linter	ESLint
 
 Export to Sheets
 🚀 Getting Started
-Follow these instructions to get a local copy up and running for development and testing purposes.
+Get your local copy of TrustSight up and running in minutes.
 
 Prerequisites
-Python: Version 3.11 or higher
+Python 3.11+
 
-Node.js: Version 18+ and npm
+Node.js 18+ and npm
 
-API Keys: You'll need API keys for:
+API Keys for OpenAI, Serper, and optionally Google Gemini
 
-OpenAI
-
-Serper
-
-Google Gemini (Optional, for fallback)
-
-⚙️ Backend Installation
+Installation
 Clone the Repository
 
 Bash
 
 git clone <repository-url>
 cd TrustSight
-Install Python Dependencies
+Setup the Backend
 
 Bash
 
+# Install Python dependencies
 pip install -r requirements.txt
-Configure Environment Variables
-Create a .env file in the project's root directory and add your API keys:
+<details>
+<summary><strong>Set Environment Variables</strong> (Click to expand)</summary>
+
+Create a .env file in the project root and add your API keys:
 
 Code snippet
 
 OPENAI_API_KEY=your_openai_api_key
 SERPER_API_KEY=your_serper_api_key
 GEMINI_API_KEY=your_gemini_api_key  # Optional
-Launch the Backend Server
+</details>
 
 Bash
 
+# Run the FastAPI server
 python main.py
-The API will be live at http://localhost:8000.
-
-🖥️ Frontend Installation
-Navigate to the Frontend Directory
+Setup the Frontend
 
 Bash
 
+# Navigate to the frontend directory
 cd frontend
-Install Node.js Dependencies
 
-Bash
-
+# Install npm packages
 npm install
-Run the Development Server
 
-Bash
-
+# Start the development server
 npm run dev
-The frontend will be live at http://localhost:5173.
+Your TrustSight instance is now running!
 
-📖 How to Use
-TrustSight's API is simple and intuitive. The /research endpoint automatically detects the desired output format based on your query.
+Backend API: http://localhost:8000
 
-Example Queries
-Bullet Points (default): "What are the benefits of renewable energy?"
+Frontend App: http://localhost:5173
 
-Tables: "Compare top cloud providers in a table"
+📖 API Usage
+Interact with the TrustSight API to power your own applications.
 
-Graphs: "Show a graph of Moore's Law over time"
-
-Core API Endpoints
 <details>
 <summary><strong>POST /research</strong> - Perform a research query</summary>
 
-Performs a comprehensive search and returns formatted results with trust scores.
-
-Request Body:
+Request:
 
 JSON
 
 {
-  "query": "What are the benefits of renewable energy?"
+  "query": "Compare different programming languages in a table"
 }
-Example Response:
+Response (Table):
 
 JSON
 
 {
-  "format": "points",
-  "data": "- Reduces greenhouse gas emissions\n- Creates jobs in green sectors\n- Decreases dependence on fossil fuels",
-  "sources": [
-    { "url": "https://www.un.org/en/climatechange/what-is-renewable-energy", "trust_score": 0.95 },
-    { "url": "https://www.nrdc.org/stories/renewable-energy-clean-facts", "trust_score": 0.88 }
-  ]
+  "table": "| Language | Typing | Performance | Use Case |\n|---|---|---|---|\n| Python | Dynamic | Medium | Web, AI/ML |\n| Rust | Static | High | Systems Prog |\n| JavaScript | Dynamic | Medium | Web Dev |"
 }
 </details>
 
 <details>
-<summary><strong>POST /approve_source</strong> - Boost a source's trust score</summary>
+<summary><strong>POST /approve_source & /flag_source</strong> - Manage trust scores</summary>
 
-Approves a source URL, manually boosting its credibility score for future queries.
+Boost or penalize a source's credibility score.
 
-Request Body:
-
-JSON
-
-{
-  "source": "https://example.com"
-}
-</details>
-
-<details>
-<summary><strong>POST /flag_source</strong> - Lower a source's trust score</summary>
-
-Flags a source URL as unreliable, lowering its credibility score for future queries.
-
-Request Body:
+Request (/approve_source):
 
 JSON
 
 {
-  "source": "https://unreliable-site.com"
+  "source": "https://www.nature.com/"
 }
 </details>
 
-🏗️ Project Architecture
-The project is organized into a modular backend and a separate frontend application for a clean separation of concerns.
-
-TrustSight/
-├── main.py               # FastAPI application entry point
-├── search.py             # Web search using Serper API
-├── fetcher.py            # Async content fetching and cleaning
-├── claims.py             # LLM-based claim extraction
-├── trust_scoring.py      # Multilayer trust scoring system
-├── cve.py                # Cross-validation engine
-├── summarizer.py         # Query-type based summarization
-├── graph_generator.py    # Graph generation with matplotlib
-├── response_generator.py # Unified response generation
-├── frontend/             # React frontend application
-│   ├── src/
-│   │   ├── App.jsx       # Main React component
-│   │   ├── App.css       # Styles and dark theme
-│   │   └── ...
-│   └── ...
-└── requirements.txt      # Python dependencies
-🤝 How to Contribute
+🤝 Contributing
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-Please follow these steps to contribute:
+🍴 Fork the Project
 
-Fork the Project
+🌟 Create your Feature Branch (git checkout -b feature/AmazingFeature)
 
-Create your Feature Branch (git checkout -b feature/AmazingFeature)
+✅ Commit your Changes (git commit -m 'Add some AmazingFeature')
 
-Commit your Changes (git commit -m 'Add some AmazingFeature')
+🚀 Push to the Branch (git push origin feature/AmazingFeature)
 
-Push to the Branch (git push origin feature/AmazingFeature)
+🎉 Open a Pull Request
 
-Open a Pull Request
 
-📄 License
-This project is distributed under the MIT License. See LICENSE for more information.
 
 <div align="center">
 <p>Made with ❤️ by the TrustSight team</p>
 <p>
-<a href="#-trustsight">Back to Top</a>
+<a href="#-trustsight">Back to top</a>
 </p>
 </div>
