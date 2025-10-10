@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+aiohttp
+beautifulsoup4
+openai
+pandas
+matplotlib
+scikit-learn
+google-generativeai
