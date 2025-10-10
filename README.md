@@ -1,162 +1,134 @@
-<h1 align="center">🌟 TrustSight</h1>
+# AI Research Agent Backend
 
-<p align="center">
-An intelligent AI research agent that delivers trustworthy, data-driven insights through advanced trust scoring and cross-validation.
-<br />
-<a href="#-key-features"><strong>Explore the features »</strong></a>
-<br />
-<br />
-<a href="https://github.com/your-repo/TrustSight/issues">Report Bug</a>
-·
-<a href="https://github.com/your-repo/TrustSight/issues">Request Feature</a>
-</p>
-</div>
+## Overview
 
-<div align="center">
+This is a Python FastAPI backend for an AI Research Agent that accepts research queries and returns real data outputs such as bullet points, tables, or graphs based on the query type.
 
-</div>
+## Features
 
-The Problem
-In an era of information overload and AI-generated content, finding trustworthy, unbiased information is harder than ever. Standard search tools provide links, not answers, and LLMs can hallucinate without source verification.
+- POST `/research`: Accepts a research query and returns:
+  - Bullet points text for "points" queries
+  - Pandas DataFrame (as JSON) for "table" queries
+  - Graph image (base64) + textual explanation for "graph" queries
+- POST `/approve_source`: Approves a source URL and updates trust scores
+- POST `/flag_source`: Flags a source URL as unreliable
 
-Our Solution
-TrustSight acts as your AI research partner. It automates the tedious process of searching, fetching, cleaning, and validating information from multiple sources. By clustering claims and applying a multilayer trust score, it delivers insights you can actually rely on.
+## Requirements
 
-<p align="center">
-<img src="https://via.placeholder.com/800x450/111827/FFFFFF?text=TrustSight+Application+Screenshot" alt="TrustSight Demo" style="border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" />
-</p>
+- Python 3.11+
+- Dependencies listed in `requirements.txt`
 
-✨ Key Features
-Feature	Description
-🛡️ Advanced Trust Scoring	Evaluates source credibility, content factuality, and citation quality using a unique multilayer system.
-🔄 Automated Cross-Validation	Intelligently clusters similar claims from different sources and assigns a confidence score to each.
-📊 Dynamic Output Formats	Automatically detects the best format for your query, delivering bullet points, tables, or graphs.
-📈 Real-time Graph Generation	Generates insightful charts and graphs on the fly using matplotlib for data visualization.
-🎨 Modern & Intuitive UI	A sleek, ChatGPT-inspired dark theme interface built with React and Tailwind CSS for a great user experience.
-⚡ High-Performance Backend	Built with Python and FastAPI, featuring asynchronous processing for fast, non-blocking I/O.
+## Installation
 
-Export to Sheets
-🛠️ Tech Stack
-Our stack is built on modern, high-performance technologies to deliver a fast and reliable experience.
+1. Clone or download the project files.
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+3. Set environment variables:
+   - `OPENAI_API_KEY`: Your OpenAI API key
+   - `SERPER_API_KEY`: Your Serper API key
+   - `GEMINI_API_KEY`: Your Google Gemini API key (optional fallback)
 
-Category	Technology
-🌐 Backend	Python 3.11+, FastAPI
-🧠 AI & Search	OpenAI API, Google Gemini API, Serper API
-💻 Frontend	React 19, Vite, Tailwind CSS
-Linter	ESLint
+## Running Locally
 
-Export to Sheets
-🚀 Getting Started
-Get your local copy of TrustSight up and running in minutes.
-
-Prerequisites
-Python 3.11+
-
-Node.js 18+ and npm
-
-API Keys for OpenAI, Serper, and optionally Google Gemini
-
-Installation
-Clone the Repository
-
-Bash
-
-git clone <repository-url>
-cd TrustSight
-Setup the Backend
-
-Bash
-
-# Install Python dependencies
-pip install -r requirements.txt
-<details>
-<summary><strong>Set Environment Variables</strong> (Click to expand)</summary>
-
-Create a .env file in the project root and add your API keys:
-
-Code snippet
-
-OPENAI_API_KEY=your_openai_api_key
-SERPER_API_KEY=your_serper_api_key
-GEMINI_API_KEY=your_gemini_api_key  # Optional
-</details>
-
-Bash
-
-# Run the FastAPI server
+Run the FastAPI server:
+```
 python main.py
-Setup the Frontend
+```
+Or with uvicorn:
+```
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
 
-Bash
+The API will be available at `http://localhost:8000`.
 
-# Navigate to the frontend directory
-cd frontend
+## API Endpoints
 
-# Install npm packages
-npm install
+### POST `/research`
 
-# Start the development server
-npm run dev
-Your TrustSight instance is now running!
-
-Backend API: http://localhost:8000
-
-Frontend App: http://localhost:5173
-
-📖 API Usage
-Interact with the TrustSight API to power your own applications.
-
-<details>
-<summary><strong>POST /research</strong> - Perform a research query</summary>
-
-Request:
-
-JSON
-
+**Input:**
+```json
 {
-  "query": "Compare different programming languages in a table"
+  "query": "string"
 }
-Response (Table):
+```
 
-JSON
+**Output:**
+- For points queries (default):
+  ```json
+  {
+    "points": "- Claim 1\n- Claim 2\n..."
+  }
+  ```
+- For table queries (if query contains "table", "compare", etc.):
+  ```json
+  {
+    "table": [
+      {"Claim": "Claim 1", "Source": 0, "Trust Score": 0.8, "Confidence": 0.7},
+      ...
+    ]
+  }
+  ```
+- For graph queries (if query contains "graph", "plot", etc.):
+  ```json
+  {
+    "graph_image_base64": "base64_encoded_image",
+    "explanation": "Textual explanation of the graph"
+  }
+  ```
 
+### POST `/approve_source`
+
+**Input:**
+```json
 {
-  "table": "| Language | Typing | Performance | Use Case |\n|---|---|---|---|\n| Python | Dynamic | Medium | Web, AI/ML |\n| Rust | Static | High | Systems Prog |\n| JavaScript | Dynamic | Medium | Web Dev |"
+  "source": "https://example.com"
 }
-</details>
+```
 
-<details>
-<summary><strong>POST /approve_source & /flag_source</strong> - Manage trust scores</summary>
-
-Boost or penalize a source's credibility score.
-
-Request (/approve_source):
-
-JSON
-
+**Output:**
+```json
 {
-  "source": "https://www.nature.com/"
+  "message": "Source https://example.com approved and trust score updated."
 }
-</details>
+```
 
-🤝 Contributing
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+### POST `/flag_source`
 
-🍴 Fork the Project
+**Input:**
+```json
+{
+  "source": "https://example.com"
+}
+```
 
-🌟 Create your Feature Branch (git checkout -b feature/AmazingFeature)
+**Output:**
+```json
+{
+  "message": "Source https://example.com flagged as unreliable and trust score updated."
+}
+```
 
-✅ Commit your Changes (git commit -m 'Add some AmazingFeature')
+## Sample Queries
 
-🚀 Push to the Branch (git push origin feature/AmazingFeature)
+- Points: "What are the benefits of renewable energy?"
+- Table: "Compare different programming languages in a table"
+- Graph: "Show a graph of global temperature changes"
 
-🎉 Open a Pull Request
+## Modules
 
+- `search.py`: Web search using Serper API
+- `fetcher.py`: Async content fetching and cleaning
+- `claims.py`: LLM-based claim extraction
+- `trust_scoring.py`: Multilayer trust scoring
+- `cve.py`: Cross-validation engine
+- `summarizer.py`: Query-type based summarization
+- `graph_generator.py`: Real graph generation with matplotlib
 
+## Notes
 
-<div align="center">
-<p>Made with ❤️ by the TrustSight team</p>
-<p>
-<a href="#-trustsight">Back to top</a>
-</p>
-</div>
+- Query type is detected using keyword heuristics; can be enhanced with LLM classification.
+- Graphs are generated as PNG images encoded in base64.
+- Trust scoring includes domain authority, recency, author credibility, structural completeness, and cross-reference validation.
+- Cross-validation clusters similar claims and assigns confidence scores.

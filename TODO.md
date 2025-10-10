@@ -1,5 +1,5 @@
-# TODO: Make UI similar to ChatGPT in dark theme
+# Performance Optimization TODO
 
-- [x] Modify App.jsx to implement chat interface with messages state
-- [x] Update App.css for dark theme and chat bubble styles
-- [ ] Test the UI by running the development server
+- [x] Modify async_fetch_and_clean in fetcher.py to fetch URLs concurrently using asyncio.gather
+- [x] Modify generate_response in response_generator.py to run LLM calls concurrently using asyncio.gather
+- [ ] Test the performance improvement by running the app

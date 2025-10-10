@@ -82,7 +82,7 @@
   stroke: white;
 }
 
-.logo-icon {
+/* .logo-icon {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.75rem;
@@ -91,7 +91,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md);
-}
+} */
 
 .logo-icon svg {
   stroke: white;
@@ -100,7 +100,7 @@
 .chat-header h1 {
   font-size: 1.25rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: #ffff;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -141,11 +141,11 @@
   width: 5rem;
   height: 5rem;
   border-radius: 1.5rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-md);
+ 
   margin-bottom: 1.5rem;
 }
 
@@ -232,12 +232,11 @@
   width: 2rem;
   height: 2rem;
   border-radius: 0.5rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: var(--shadow-md);
+ 
 }
 
 .message-avatar svg {

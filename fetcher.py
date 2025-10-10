@@ -1,4 +1,5 @@
 import aiohttp
+import asyncio
 from bs4 import BeautifulSoup
 from typing import List, Dict
 
@@ -39,11 +40,19 @@ async def async_fetch_and_clean(search_results: List[Dict]) -> List[str]:
     """
     Fetch and clean content from search results asynchronously.
     """
-    contents = []
+    tasks = []
     for result in search_results:
         url = result.get("link")
         if url:
-            html = await fetch_content(url)
+            tasks.append(fetch_content(url))
+
+    if not tasks:
+        return []
+
+    htmls = await asyncio.gather(*tasks, return_exceptions=True)
+    contents = []
+    for html in htmls:
+        if isinstance(html, str) and html:
             clean_text = clean_html(html)
             contents.append(clean_text)
     return contents

@@ -1,5 +1,6 @@
 import os
 import json
+import asyncio
 from typing import List, Dict, Union
 import google.generativeai as genai
 
@@ -112,17 +113,43 @@ async def generate_follow_up_suggestions(query: str, contents: List[str]) -> Lis
         return []
 
 async def generate_response(query: str, contents: List[str], query_types: List[str]) -> Dict:
-    response = {}
+    tasks = []
+    task_keys = []
     if "points" in query_types or not query_types:
-        response["points"] = await generate_points(query, contents)
+        tasks.append(generate_points(query, contents))
+        task_keys.append("points")
     if "table" in query_types:
-        response["table"] = await generate_table(query, contents)
+        tasks.append(generate_table(query, contents))
+        task_keys.append("table")
     if "graph" in query_types:
-        graph_data = await generate_graph_data(query, contents)
-        # Then generate graph image
+        tasks.append(generate_graph_data(query, contents))
+        task_keys.append("graph_data")
+    # Always
+    tasks.append(generate_related_insights(query, contents))
+    task_keys.append("related_insights")
+    tasks.append(generate_follow_up_suggestions(query, contents))
+    task_keys.append("follow_up_suggestions")
+
+    if not tasks:
+        return {}
+
+    gathered = await asyncio.gather(*tasks, return_exceptions=True)
+    results = {}
+    for key, result in zip(task_keys, gathered):
+        if isinstance(result, Exception):
+            print(f"Error in {key}: {result}")
+            results[key] = {} if key in ["points", "related_insights"] else [] if key in ["table", "follow_up_suggestions"] else {}
+        else:
+            results[key] = result
+
+    response = {}
+    if "points" in task_keys:
+        response["points"] = results["points"]
+    if "table" in task_keys:
+        response["table"] = results["table"]
+    if "graph_data" in task_keys:
+        graph_data = results["graph_data"]
         from graph_generator import generate_graph
-        # Use existing generate_graph function with claims-like data
-        # Here we simulate claims from graph_data for visualization
         claims = []
         if "labels" in graph_data and "values" in graph_data:
             for label, value in zip(graph_data["labels"], graph_data["values"]):
@@ -132,8 +159,6 @@ async def generate_response(query: str, contents: List[str], query_types: List[s
             "image_base64": graph_img_b64,
             "explanation": graph_text
         }
-    # Always include related insights for more detailed research
-    response["related_insights"] = await generate_related_insights(query, contents)
-    # Generate follow-up suggestions for better interaction
-    response["follow_up_suggestions"] = await generate_follow_up_suggestions(query, contents)
+    response["related_insights"] = results["related_insights"]
+    response["follow_up_suggestions"] = results["follow_up_suggestions"]
     return response

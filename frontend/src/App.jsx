@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import './Index.css';
+import logo from './assets/logo.png';
+
 
 const Index = () => {
   const [query, setQuery] = useState('');
@@ -186,13 +188,12 @@ const Index = () => {
         <div className="header-content">
           <div className="logo-container">
             <div className="logo-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-              </svg>
+              <img width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" src={logo}>
+              </img>
             </div>
             <div>
-              <h1>AI Research Agent</h1>
-              <p className="subtitle">Powered by advanced AI</p>
+              <h1>TrustSight</h1>
+              <p className="subtitle">Powered by Impact Innovators</p>
             </div>
           </div>
           <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
@@ -223,9 +224,8 @@ const Index = () => {
           {messages.length === 0 ? (
             <div className="welcome-screen">
               <div className="welcome-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                </svg>
+                <img width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" src={logo}>
+                </img>
               </div>
               <div className="welcome-text">
                 <h2>Welcome to AI Research</h2>
@@ -255,9 +255,8 @@ const Index = () => {
                 >
                   {message.type === 'assistant' && (
                     <div className="message-avatar">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                      </svg>
+                      <img width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" src={logo}>
+                </img>
                     </div>
                   )}
                   <div className="message-content-wrapper">
@@ -276,9 +275,8 @@ const Index = () => {
               {loading && (
                 <div className="message assistant-message">
                   <div className="message-avatar loading-avatar">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
+                   <img width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" src={logo}>
+                </img>
                   </div>
                   <div className="loading-card">
                     <div className="loading-dots">
@@ -319,7 +317,7 @@ const Index = () => {
             </button>
           </form>
           <p className="disclaimer">
-            AI Research Agent can make mistakes. Verify important information.
+            TrustSight can make mistakes. Verify important information.
           </p>
         </div>
       </div>
