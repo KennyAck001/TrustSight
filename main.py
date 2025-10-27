@@ -7,6 +7,10 @@ from pydantic import BaseModel
 from typing import Optional
 import uvicorn
 from cachetools import TTLCache
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 from search import async_search
 from fetcher import async_fetch_and_clean

@@ -7,7 +7,6 @@
 *Research made trustworthy — live web search + credibility scoring + structured outputs*
 
 [![GitHub stars](https://img.shields.io/github/stars/KennyAck001/TrustSight?style=social)](https://github.com/KennyAck001/TrustSight)
-[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-18+-61dafb.svg)](https://reactjs.org/)
@@ -451,22 +450,6 @@ Special thanks to:
 - Google for Gemini API access
 - Serper for reliable search API
 - Open source community
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2025 Ayush & TrustSight Team
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
-```
 
 ---
 

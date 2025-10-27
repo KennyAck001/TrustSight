@@ -2,8 +2,8 @@ import os
 import aiohttp
 from typing import List, Dict
 
-SERPER_API_KEY = os.getenv("SERPER_API_KEY", "d9f7e092b0a3239c686d07270524424638f1d209")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyCOlB0QQX-FiF9HCTxTeIH2pn0MY3pzy7M")
+SERPER_API_KEY = os.getenv("SERPER_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 async def serper_search(query: str) -> List[Dict]:
     """

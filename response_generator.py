@@ -4,7 +4,7 @@ import asyncio
 from typing import List, Dict, Union
 import google.generativeai as genai
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyCOlB0QQX-FiF9HCTxTeIH2pn0MY3pzy7M")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash')
 
