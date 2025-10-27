@@ -8,19 +8,33 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyCOlB0QQX-FiF9HCTxTeIH2pn0MY3
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash')
 
+async def summarize_content(contents: List[str]) -> str:
+    if len(contents) == 0:
+        return ""
+    # Summarize if total content is too long (e.g., > 10000 chars)
+    total_length = sum(len(c) for c in contents)
+    if total_length > 10000:
+        combined = "\n\n".join(contents)
+        prompt = f"Summarize the following web content into a concise version (max 5000 characters) while preserving key facts, data, and insights relevant for research queries. Keep it informative.\n\nContent:\n{combined[:15000]}"  # Limit input to avoid token limits
+        try:
+            response = model.generate_content(prompt)
+            return response.text.strip()[:5000]  # Cap summary length
+        except Exception as e:
+            print(f"Error summarizing content: {e}")
+            return combined[:5000]  # Fallback to truncated original
+    else:
+        return "\n\n".join(contents)
+
 async def generate_points(query: str, contents: List[str]) -> Dict[int, Dict]:
-    content_text = "\n\n".join(contents)
-    prompt = f"Based on the following web content, generate 15-20 detailed bullet points that directly answer the query '{query}', including related insights, additional context, supporting details, and any relevant related fields or points for comprehensive business analyst research. Ensure the information is in-depth and useful. Format as bullet points, each starting with '-'.\n\nContent:\n{content_text}"
+    content_text = await summarize_content(contents)
+    prompt = f"Based on the following summarized web content, generate 10-15 detailed bullet points that directly answer the query '{query}', including related insights, additional context, supporting details, and any relevant related fields or points for comprehensive business analyst research. Ensure the information is in-depth and useful. Format as bullet points, each starting with '-'.\n\nContent:\n{content_text}"
     try:
         response = model.generate_content(prompt)
-        print(f"DEBUG: Full LLM response object for points:\n{response}\n")  # Full response debug
         text = response.text.strip()
-        print(f"DEBUG: Raw LLM output for points:\n{text}\n")  # Debug log
         lines = [line.lstrip('- ').strip() for line in text.split('\n') if line.strip() and len(line) > 5 and not line.lower().startswith(('here', 'the', 'based', 'content', 'points', 'bullet'))]
-        print(f"DEBUG: Extracted lines for points:\n{lines}\n")  # Lines debug
         points = {}
         if lines:
-            for i, line in enumerate(lines[:20]):  # Limit to 20
+            for i, line in enumerate(lines[:15]):  # Limit to 15
                 points[i] = {
                     "text": line,
                     "trust_score": 1.0,  # Default high score
@@ -39,8 +53,8 @@ async def generate_points(query: str, contents: List[str]) -> Dict[int, Dict]:
         return {}
 
 async def generate_table(query: str, contents: List[str]) -> List[Dict]:
-    content_text = "\n\n".join(contents)
-    prompt = f"Based on the following web content, generate a comprehensive JSON array of objects representing a detailed table that answers the query '{query}'. Each object should have multiple keys for columns such as 'Item', 'Description', 'Category', 'Details', 'Impact', 'Source', and any other relevant fields to provide in-depth information for business analyst research. Include as many rows as possible with relevant data. Output only valid JSON.\n\nContent:\n{content_text}"
+    content_text = await summarize_content(contents)
+    prompt = f"Based on the following summarized web content, generate a JSON array of objects representing a table that answers the query '{query}'. Each object should have keys like 'Item', 'Description', 'Details'. Include up to 10 rows. Output only valid JSON.\n\nContent:\n{content_text}"
     try:
         response = model.generate_content(prompt)
         text = response.text.strip()
@@ -112,6 +126,35 @@ async def generate_follow_up_suggestions(query: str, contents: List[str]) -> Lis
         print(f"Error generating follow-up suggestions: {e}")
         return []
 
+async def classify_intent(query: str) -> str:
+    prompt = f"Classify the following user query as either 'research' or 'conversation'. 'Research' means the query requires searching the web, analyzing data, or providing in-depth information on a topic. 'Conversation' means casual chat, greetings, small talk, or simple questions that don't require external research. Respond with only one word: 'research' or 'conversation'.\n\nQuery: {query}"
+    try:
+        response = model.generate_content(prompt)
+        intent = response.text.strip().lower()
+        if intent in ['research', 'conversation']:
+            return intent
+        else:
+            return 'research'  # Default to research if unclear
+    except Exception as e:
+        print(f"Error classifying intent: {e}")
+        return 'research'  # Default to research on error
+
+async def generate_conversation(query: str) -> Dict:
+    prompt = f"Respond to the following user query in a friendly, conversational manner. Keep the response engaging, helpful, and casual. Do not provide research or in-depth analysis. If it's a greeting, respond warmly. If it's a question, answer briefly and naturally.\n\nQuery: {query}"
+    try:
+        response = model.generate_content(prompt)
+        text = response.text.strip()
+        return {
+            "type": "conversation",
+            "response": text
+        }
+    except Exception as e:
+        print(f"Error generating conversation: {e}")
+        return {
+            "type": "conversation",
+            "response": "I'm sorry, I couldn't process that right now. Let's try again!"
+        }
+
 async def generate_response(query: str, contents: List[str], query_types: List[str]) -> Dict:
     tasks = []
     task_keys = []
@@ -124,7 +167,7 @@ async def generate_response(query: str, contents: List[str], query_types: List[s
     if "graph" in query_types:
         tasks.append(generate_graph_data(query, contents))
         task_keys.append("graph_data")
-    # Always
+    # Always include insights and suggestions, but limit to essentials
     tasks.append(generate_related_insights(query, contents))
     task_keys.append("related_insights")
     tasks.append(generate_follow_up_suggestions(query, contents))

@@ -79,6 +79,24 @@ const Index = () => {
       );
     }
 
+    // Handle conversational responses
+    if (data.type === "conversation") {
+      return (
+        <div className="response-content">
+          <div className="card conversation-card">
+            <div className="card-header">
+              <svg className="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              <h3>Chat Response</h3>
+            </div>
+            <p className='text-white'>{data.response}</p>
+          </div>
+        </div>
+      );
+    }
+
+    // Handle research responses
     return (
       <div className="response-content">
         {data.points && (
@@ -138,8 +156,8 @@ const Index = () => {
             <h3>Visualization</h3>
             <p className="graph-explanation">{data.graph.explanation}</p>
             <div className="graph-container">
-              <img 
-                src={`data:image/png;base64,${data.graph.image_base64}`} 
+              <img
+                src={`data:image/png;base64,${data.graph.image_base64}`}
                 alt="Graph"
               />
             </div>
